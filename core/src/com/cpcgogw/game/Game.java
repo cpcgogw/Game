@@ -17,9 +17,12 @@ public class Game extends ApplicationAdapter {
     private Texture background;
     private float stateTime;
 
+    private int screenWidth = 720;
+    private int screenHeight = 600;
+
     @Override
 	public void create () {
-        camera = new OrthographicCamera(720, 600);
+        camera = new OrthographicCamera(screenWidth, screenHeight);
 		font = new BitmapFont();
 		font.setColor(Color.BLACK);
 		font.getData().setScale(3, 3);
@@ -35,34 +38,47 @@ public class Game extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stateTime += Gdx.graphics.getDeltaTime();
 		TextureRegion currentFrame = hero.drawHero().getKeyFrame(stateTime, true);
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+
             hero.setXPos(hero.getXPos()-2);
-            camera.translate(-2, 0);
-            camera.update();
 
-            //System.out.println("xPos = " + hero.getXPos());
+            if(((Math.abs(hero.getXPos())) + screenWidth/2) < background.getWidth()/2) {
+                camera.translate(-2, 0);
+                camera.update();
+            }
         }
+
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+
             hero.setXPos(hero.getXPos()+2);
-            camera.translate(2, 0);
-            camera.update();
 
-            //System.out.println("xPos = " + hero.getXPos());
+            if(((Math.abs(hero.getXPos())) + screenWidth/2) < background.getWidth()/2) {
+                camera.translate(2, 0);
+                camera.update();
+            }
         }
+
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            hero.setYPos(hero.getYPos()+2);
-            camera.translate(0, 2);
-            camera.update();
 
-            //System.out.println("yPos = " + hero.getYPos());
+            hero.setYPos(hero.getYPos() + 2);
+
+            if(((Math.abs(hero.getYPos())) + screenHeight/2) < background.getHeight()/2) {
+                camera.translate(0, 2);
+                camera.update();
+            }
         }
+
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            hero.setYPos(hero.getYPos()-2);
-            camera.translate(0, -2);
-            camera.update();
 
-            //System.out.println("yPos = " + hero.getYPos());
+            hero.setYPos(hero.getYPos() - 2);
+
+            if(((Math.abs(hero.getYPos())) + screenHeight/2) < background.getHeight()/2) {
+                camera.translate(0, -2);
+                camera.update();
+            }
         }
+
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
         spriteBatch.draw(background, -background.getWidth()/2, -background.getHeight()/2);
