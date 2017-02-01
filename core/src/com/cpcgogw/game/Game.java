@@ -8,28 +8,44 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class Game extends ApplicationAdapter {
     private OrthographicCamera camera;
-	private BitmapFont font;
-	private SpriteBatch spriteBatch;
     private Hero hero;
-    private Texture background;
+    private SpriteBatch batch;
+    private TiledMap tiledMap;
+    private TiledMapRenderer tiledMapRenderer;
     private float stateTime;
 
-    private int screenWidth = 720;
-    private int screenHeight = 600;
+    private int mapPixelWidth;
+    private int mapPixelHeight;
+    private int cameraWidth;
+    private int cameraHeight;
 
     @Override
 	public void create () {
-        camera = new OrthographicCamera(screenWidth, screenHeight);
-		font = new BitmapFont();
-		font.setColor(Color.BLACK);
-		font.getData().setScale(3, 3);
-		background = new Texture(Gdx.files.internal("sky-5.jpg"));
-        spriteBatch = new SpriteBatch();
+        tiledMap = new TmxMapLoader().load("maps/TestMap1.tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        int mapWidth = tiledMap.getProperties().get("width", Integer.class);
+        int mapHeight = tiledMap.getProperties().get("height", Integer.class);
+        int tileWidth = tiledMap.getProperties().get("tilewidth", Integer.class);
+        int tileHeight = tiledMap.getProperties().get("tileheight", Integer.class);
+        mapPixelWidth = mapWidth*tileWidth;
+        mapPixelHeight = mapHeight*tileHeight;
+        cameraWidth = 512;
+        cameraHeight = 512;
+        camera = new OrthographicCamera(cameraWidth, cameraHeight);
+
+        camera.translate(cameraWidth/2, cameraHeight/2);
+        camera.update();
+
+		batch = new SpriteBatch();
 		stateTime = 0f;
-        hero = new Hero(0, 0);
+        hero = new Hero(cameraWidth/2, cameraHeight/2);
     }
 
 	@Override
@@ -37,60 +53,55 @@ public class Game extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stateTime += Gdx.graphics.getDeltaTime();
+		camera.update();
+		tiledMapRenderer.setView(camera);
+		tiledMapRenderer.render();
+
 		TextureRegion currentFrame = hero.drawHero().getKeyFrame(stateTime, true);
 
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
 
-            hero.setXPos(hero.getXPos()-2);
-
-            if(((Math.abs(hero.getXPos())) + screenWidth/2) < background.getWidth()/2) {
+            if(hero.getXPos() > cameraWidth/2 && hero.getXPos() < (mapPixelWidth - cameraWidth/2)) {
                 camera.translate(-2, 0);
                 camera.update();
             }
+            hero.setXPos(hero.getXPos()-2);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 
-            hero.setXPos(hero.getXPos()+2);
-
-            if(((Math.abs(hero.getXPos())) + screenWidth/2) < background.getWidth()/2) {
+            if(hero.getXPos() > cameraWidth/2 && hero.getXPos() < (mapPixelWidth - cameraWidth/2)) {
                 camera.translate(2, 0);
                 camera.update();
             }
+            hero.setXPos(hero.getXPos()+2);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
 
-            hero.setYPos(hero.getYPos() + 2);
-
-            if(((Math.abs(hero.getYPos())) + screenHeight/2) < background.getHeight()/2) {
+            if(hero.getYPos() > cameraHeight/2 && hero.getYPos() < (mapPixelHeight - cameraHeight/2)) {
                 camera.translate(0, 2);
                 camera.update();
             }
+            hero.setYPos(hero.getYPos() + 2);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
 
-            hero.setYPos(hero.getYPos() - 2);
-
-            if(((Math.abs(hero.getYPos())) + screenHeight/2) < background.getHeight()/2) {
+            if(hero.getYPos() > cameraHeight/2 && hero.getYPos() < (mapPixelHeight - cameraHeight/2)) {
                 camera.translate(0, -2);
                 camera.update();
             }
+            hero.setYPos(hero.getYPos() - 2);
         }
-
-        spriteBatch.setProjectionMatrix(camera.combined);
-        spriteBatch.begin();
-        spriteBatch.draw(background, -background.getWidth()/2, -background.getHeight()/2);
-		font.draw(spriteBatch, "This is a game", 165, 350);
-		spriteBatch.draw(currentFrame, hero.getXPos(), hero.getYPos());
-		spriteBatch.end();
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        batch.draw(currentFrame, hero.getXPos(), hero.getYPos());
+        batch.end();
 	}
 	
 	@Override
 	public void dispose () {
-		spriteBatch.dispose();
-		font.dispose();
-		background.dispose();
+
 	}
 }

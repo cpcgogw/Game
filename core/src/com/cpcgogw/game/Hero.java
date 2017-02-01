@@ -18,7 +18,7 @@ public class Hero extends Creature {
         this.yPos = yPos;
     }
     public Animation<TextureRegion> drawHero(){
-        Texture texture = new Texture(Gdx.files.internal("bat_sprite.png"));
+        Texture texture = new Texture(Gdx.files.internal("Sprites/bat_sprite.png"));
         TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth()/4, texture.getHeight()/4);
         TextureRegion[] frames = new TextureRegion[4*4];
         int index = 0;

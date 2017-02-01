@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="16" tileheight="16" nextobjectid="1">
+ <tileset firstgid="1" name="tileset_16x16_final_1" tilewidth="16" tileheight="16" tilecount="323">
+  <image source="tileset_16x16_final_1.png" width="272" height="304"/>
+ </tileset>
+ <layer name="dirt" width="64" height="64">
+  <data encoding="base64" compression="zlib">
+   eJztw0ENAAAMA6Hzr6UiJ2MfSFg1VVVVVVVVVVVVVVVVVVVV9fUB6mfAlw==
+  </data>
+ </layer>
+ <layer name="grass" width="64" height="64">
+  <data encoding="base64" compression="zlib">
+   eJzt1MsNAjEMRdEUyJpvCVSAqABE0cQSkdhk5JmE2MT3SG/JiGs+KY2xqyyCWvus91jTO0t/S/MM94jYHfEz/1Wz9/4R3Z76R/Z66rfspp9+636x5T3v8w6fHSs7KZ9lbUv/I++Zd8m7VXZNuhtYa/nuyh2WbnBXPMNa6+936Qb/0F/0vsE576V4rRc9vwfadk/9oscN5H9R2+6tX7TeYO08it4vovcXkdtF5PYicnsRuf1bxGYAAAAAAAAAAAAAAAAAsPYGWCXPQg==
+  </data>
+ </layer>
+ <layer name="trees" width="64" height="64">
+  <data encoding="base64" compression="zlib">
+   eJzt11EKwjAQhOE9YB/0CHoEPYIeQY+g5zRFhhRhLTaVNNn/g3kI2JKpbGnMAAAldguzr7HZP6D/u8uStMjrG+X/196PHzn8kB76175HLfSnf+n+W+6/xvur5f4j+tOf/r6h8Potm37/egb7/gxa7j++//XN651r1L/H88+0vxf1n/tdb04pZ8v9tY7iknK13F/rKG4pd8v9tY7ikfK03F/rKJh/5p/5Z/6Zf+af+Y83/zJ3/gUAAAAAAAAAAAAArOcFB4NYwg==
+  </data>
+ </layer>
+ <layer name="road" width="64" height="64">
+  <data encoding="base64" compression="zlib">
+   eJzt0jkOQiEYhVFKF2ftsAKHHagrcFi0P5HCEBqLB4mck9xgqPjyTAkAAOA369gmto3tylkv3+9HPXBhuf8QO8ZO5ayX78+jHthB7r/ErunT2/r97/2t7/69Gfr9/9v9+f427HXLu8cesWc56+X717DX9bcqm5V+/frnpV+//nnp169/Xvr1z9wPAAAAAAAA0NMbaXsfcQ==
+  </data>
+ </layer>
+ <layer name="water" width="64" height="64">
+  <data encoding="base64" compression="zlib">
+   eJztz9ENQDAUhtFOSUyAETABMbR2AG08NA3OSb6n+3L/EAAAAJ7rYn2hodl39Y2xJdMU25p9V1/av2bu9tv/h/1p53zTl/fvsaPQ2ew7AAAAAAAAAAAAAIB3uwDTAxbs
+  </data>
+ </layer>
+</map>
